@@ -1,0 +1,110 @@
+{% extends "auth_base.html" %}
+{% load static  %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start Content-->
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customer Info</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customer</a></li>
+                        <li class="breadcrumb-item active">Departments</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Deparments</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                <h4 class="header-title"></h4>
+                <p class="sub-header">
+
+                </p>
+
+                <div class="mb-2">
+                    <div class="row">
+                        <div class="col-12 text-sm-center form-inline">
+<!--                                                <div class="form-group mr-2">-->
+<!--                                                    <button id="demo-btn-addrow" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i> Add Project</button>-->
+<!--                                                </div>-->
+                            <div class="form-group mr-2">
+                                <a href="{% url 'customer_info:department-create' organization_id %}" class="btn btn-primary" data-animation="fadein"  data-overlayColor="#98a6ad"><i class="mdi mdi-plus-circle mr-1"></i> Add Department</a>
+                            </div>
+                            <div class="form-group">
+                                <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table id="demo-foo-addrow" class="table table-centered table-striped table-bordered mb-0 toggle-circle" data-page-size="7">
+                    <thead>
+                    <tr>
+                        <th>Organization</th>
+                        <th>Contact Person</th>
+                        <th>Total Employee</th>
+                        <th>Location</th>
+                        <th>Contact Number</th>
+                        <th>Package</th>
+                        <th>Email</th>
+                        <th style="width: 85px;">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if departments %}
+                        {% for department in departments %}
+                        <tr>
+                            <td class="table-user">
+                                    <a href="{% url 'customer_info:department-detail' department.id %}" class="button is-info">{{ department.name }}</a>
+                                </td>
+                            
+                            <td>{{ department.contact_person }}</td>
+                            <td>{{ department.department_user.all.count }}</td>
+                            <td>{{ department.location }}</td>
+                            <td>{{ department.contact_number }}</td>
+                            <td>{{ department.package }}</td>
+                            <td>{{ department.email }}</td>
+                            <td>
+                                <a href="{% url 'customer_info:department-update' department.id  %}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                <a href="{% url 'customer_info:department-delete' department.id  %}" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                    <tr class="active">
+                        <td colspan="8">
+                            <div class="text-right">
+                                <ul class="pagination pagination-split justify-content-end footable-pagination m-t-10"></ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div> <!-- end card-box -->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+
+</div> <!-- container -->
+
+
+{% endblock %}
+
+{% block extra_javascript %}
+{% endblock %}

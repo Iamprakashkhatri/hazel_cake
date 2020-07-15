@@ -1,0 +1,149 @@
+{% extends "auth_base.html" %}
+{% load static  %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+    <!-- Start Content-->
+    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box">
+                                        <div class="page-title-right">
+                                            <ol class="breadcrumb m-0">
+                                                <li class="breadcrumb-item"><a href="javascript: void(0);">Customer Info</a></li>
+                                                <li class="breadcrumb-item"><a href="javascript: void(0);">Customer</a></li>
+                                                <li class="breadcrumb-item active">Add Employee</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title"></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-3 header-title">Add Employee</h4>
+                                        <form  action=" " method="post" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="form-group mb-3">
+                                                        <label for="FirstName">FirstName</label>
+                                                        {{form.first_name}}
+                                                        
+                                                        {{form.errors.first_name}}
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="LastName">LastName</label>
+                                                        {{form.last_name}}
+                                                        <br>
+                                                        {{form.errors.last_name}}
+                                                        
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="Birthdate">Birthdate</label>
+                                                        {{form.birthdate}}
+                                                        {{form.errors.birthdate}}
+                                                        
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="Designation">Designation</label>
+                                                        {{form.designation}}
+                                                        <br>
+                                                        {{form.errors.designation}}
+                                                       
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="Contact Number">Contact Number</label>
+                                                        {{form.contact_number}}
+                                                       
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="Email">Email</label>
+                                                        {{form.email}}
+                                                       
+                                                    </div>
+
+                                                    <div class="text-right">
+                                                        <button type="submit" class="btn btn-success waves-effect waves-light">Add Organization</button>
+                                                    </div>
+                                                </form>
+
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="mb-3 header-title">Package Detail</h4>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group mb-3">
+                                                        <label for="Package Name">Package Name:</label>
+                                                    </div>
+                                                    <a id="cake-package">{{department.package.name}}</a>
+                                                    <hr>
+                                                    <div class="form-group mb-3">
+                                                        <label >Cake Flavour:</label>
+
+                                                    </div>
+                                                    <a id="cake-flavour">{{department.package.cake_flavour}}</a>
+                                                    <hr>
+                                                    <div class="form-group mb-3">
+                                                        <label >Cake Quantity:</label>
+                                                    </div>
+                                                    <a id="cake-quantity">{{department.package.quantity}}</a>
+                                                    <hr>
+                                                    <div class="form-group mb-3">
+                                                        <label >Complementary:</label>
+                                                    </div>
+                                                    <a id="cake-complementary"></a><br>
+
+                                                    {% if department.package.knife %}
+                                                        <a id="cake-complementary">Knife , </a>
+                                                    {% endif %}
+                                                    {% if department.package.candle %}
+                                                        <a id="cake-complementary">Candle , </a>
+                                                    {% endif %}
+                                                    {% if department.package.tissue %}
+                                                        <a id="cake-complementary">Tissue , </a>
+                                                    {% endif %}
+                                                    {% if department.package.card %}
+                                                        <a id="cake-complementary">Card , </a>
+                                                    {% endif %}
+                                                    {% if department.package.flower %}
+                                                        <a id="cake-complementary">Flower , </a>
+                                                    {% endif %}
+                                                    {% if department.package.chocolates %}
+                                                        <a id="cake-complementary">Chocolates , </a>
+                                                    {% endif %}
+
+
+                                                </div>
+                                
+                                    </div>  <!-- end card-body -->
+                                </div>  <!-- end card -->
+                            </div>  <!-- end col -->
+                            
+                        </div>
+                        <!-- end row -->
+                    </div> <!-- container -->
+
+
+  <script>
+        $('#birthdate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: "yy-m-d"
+        });
+    </script>  
+
+{% endblock %}
+{% block extra_javascript %}
+{% endblock %}
+

@@ -1,0 +1,218 @@
+{% extends "auth_base.html" %}
+{% load static  %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+    <!-- Start Content-->
+    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box">
+                                        <div class="page-title-right">
+                                            <ol class="breadcrumb m-0">
+                                                <li class="breadcrumb-item"><a href="javascript: void(0);">Customer Info</a></li>
+                                                <li class="breadcrumb-item"><a href="javascript: void(0);">Customer</a></li>
+                                                <li class="breadcrumb-item active">Update Organization</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title"></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end page title -->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="mb-3 header-title">Update Organization</h4>
+                                        <form  action=" " method="post" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="form-group mb-3">
+                                                        <label for="Username">OrganizationName</label>
+                                                        {{form.name}}
+                            
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="Contact Person">Contact Person</label>
+                                                        {{form.contact_person}}
+                                                        
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="Location">Location</label>
+                                                        {{form.location}}
+                                                        
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="contact_number">Contact Number</label>
+                                                        {{form.contact_number}}
+                                                       
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                            <label for="anniversary">Anniversary</label>
+                                                            {{ form.anniversary }}
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                            <label><label for="id_expertise">Package</label></label>
+                                                            <select  name="package" id="id_package" required="True" class="form-control">
+                                                                 <option selected>{{package}}</option>
+                                                                {% for package1 in store_package %}
+                                                                    <option>{{package1}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="Email">Email</label>
+                                                        {{form.email}}
+                                                    </div>
+
+                                                    <div class="text-right">
+                                                        <button type="submit" class="btn btn-success waves-effect waves-light">Update Organization</button>
+                                                    </div>
+                                                </form>
+
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div>
+                            <!-- end col -->
+
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="mb-3 header-title">Package Detail</h4>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="form-group mb-3">
+                                                        <label for="Package Name">Package Name:</label>
+                                                    </div>
+                                                    <a id="cake-package"></a>
+                                                    <hr>
+                                                    <div class="form-group mb-3">
+                                                        <label >Cake Flavour:</label>
+
+                                                    </div>
+                                                    <a id="cake-flavour"></a>
+                                                    <hr>
+                                                    <div class="form-group mb-3">
+                                                        <label >Cake Quantity:</label>
+                                                    </div>
+                                                    <a id="cake-quantity"></a>
+                                                    <hr>
+                                                    <div class="form-group mb-3">
+                                                        <label >Complementary:</label>
+                                                    </div>
+                                                    <a id="cake-complementary"></a><br>
+
+
+                                                </div>
+                                
+                                    </div>  <!-- end card-body -->
+                                </div>  <!-- end card -->
+                            </div>  <!-- end col -->
+                            
+                        </div>
+                        <!-- end row -->
+                    </div> <!-- container -->
+
+<script>
+        /*
+        get items before page load i.e loads json for default select package
+        */
+        document.getElementById('cake-complementary').text = "";
+        a = $("#id_package :selected").text();
+
+        $.ajax({
+            url: '{% url 'customer_info:package-request' %}',
+            type: 'GET',
+            data: {'package_name': a},
+            success: function (json) {
+
+                document.getElementById('cake-package').text = json['name'];
+                document.getElementById('cake-flavour').text = json['flavour'];
+                document.getElementById('cake-quantity').text = json['quantity'];
+
+                if (json['knife'] === true) {
+                    document.getElementById('cake-complementary').text += " Knife , ";
+                }
+                if (json['candle'] === true) {
+                    document.getElementById('cake-complementary').text += " Candle , ";
+                }
+                if (json['tissue'] === true) {
+                    document.getElementById('cake-complementary').text += " Tissue , ";
+                }
+                if (json['card'] === true) {
+                    document.getElementById('cake-complementary').text += " Card , ";
+                }
+                if (json['flower'] === true) {
+                    document.getElementById('cake-complementary').text += " Flower , ";
+                }
+                if (json['chocolates'] === true) {
+                    document.getElementById('cake-complementary').text += " Chocolates , ";
+                }
+
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+
+        // loads json when we change the package
+
+        $('#id_package').change(function () {
+            document.getElementById('cake-complementary').text = "";
+            a = $("#id_package :selected").text();
+
+            $.ajax({
+                url: '{% url 'customer_info:package-request' %}',
+                type: 'GET',
+                data: {'package_name': a},
+                success: function (json) {
+
+                    document.getElementById('cake-package').text = json['name'];
+
+                    document.getElementById('cake-flavour').text = json['flavour'];
+                    document.getElementById('cake-quantity').text = json['quantity'];
+
+                    if (json['knife'] === true) {
+                        document.getElementById('cake-complementary').text += " Knife , ";
+                    }
+                    if (json['candle'] === true) {
+                        document.getElementById('cake-complementary').text += " Candle , ";
+                    }
+                    if (json['tissue'] === true) {
+                        document.getElementById('cake-complementary').text += " Tissue , ";
+                    }
+                    if (json['card'] === true) {
+                        document.getElementById('cake-complementary').text += " Card , ";
+                    }
+                    if (json['flower'] === true) {
+                        document.getElementById('cake-complementary').text += " Flower , ";
+                    }
+                    if (json['chocolates'] === true) {
+                        document.getElementById('cake-complementary').text += " Chocolates , ";
+                    }
+
+                },
+                error: function (xhr, errmsg, err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+
+        });
+
+
+    </script>
+
+  <script>
+        $('#Anniversary').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: "yy-m-d"
+        });
+    </script>  
+
+{% endblock %}
+{% block extra_javascript %}
+{% endblock %}

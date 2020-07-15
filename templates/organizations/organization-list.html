@@ -1,0 +1,216 @@
+{% extends "auth_base.html" %}
+{% load static  %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start Content-->
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customer Info</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customer</a></li>
+                        <li class="breadcrumb-item active">Organizations</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Organizations</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                <h4 class="header-title"></h4>
+                <p class="sub-header">
+
+                </p>
+
+                <div class="mb-2">
+                    <div class="row">
+                        <div class="col-12 text-sm-center form-inline">
+<!--                                                <div class="form-group mr-2">-->
+<!--                                                    <button id="demo-btn-addrow" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i> Add Project</button>-->
+<!--                                                </div>-->
+                            <div class="form-group mr-2">
+                                <a href="{% url 'customer_info:organization-create' %}" class="btn btn-primary" data-animation="fadein"  data-overlayColor="#98a6ad"><i class="mdi mdi-plus-circle mr-1"></i> Add Organization</a>
+                            </div>
+                            <div class="form-group">
+                                <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table id="demo-foo-addrow" class="table table-centered table-striped table-bordered mb-0 toggle-circle" data-page-size="7">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Contact Person</th>
+                        <th>Location</th>
+                        <th>Contact Number</th>
+                        <th>Anniversary</th>
+                        <th>Package</th>
+                        <th>Email</th>
+                        <th style="width: 85px;">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for organization in organizations %}
+                    <tr>
+                        <td class="table-user">
+                                <a href="{% url 'customer_info:organization-detail' organization.id %}" class="button is-info">{{ organization.name }}</a>
+                            </td>
+                    
+                        <td>
+                            {{organization.contact_person}}
+                        </td>
+                        <td>
+                            {{organization.location}}
+                        </td>
+                        <td>
+                            {{organization.contact_number}}
+                        </td>
+                        <td>
+                            {{organization.anniversary}}
+                        </td>
+                        <td>
+                            {{organization.package}}
+                        </td>
+                        <td>
+                            {{organization.email}}
+                        </td>
+                        
+                        <td>
+                            
+                            <a href="{% url 'customer_info:organization-update' organization.id %}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                            <a href="{% url 'customer_info:organization-delete' organization.id %}" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr class="active">
+                        <td colspan="8">
+                            <div class="text-right">
+                                <ul class="pagination pagination-split justify-content-end footable-pagination m-t-10"></ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div> <!-- end card-box -->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+
+</div> <!-- container -->
+
+
+{% endblock %}
+
+{% block extra_javascript %}
+{% endblock %}
+
+
+
+
+            
+  <!-- Start Content-->
+    <div class="container-fluid">
+        
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+                            <li class="breadcrumb-item active">Foo</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">Foo Tables</h4>
+                </div>
+            </div>
+        </div>     
+        <!-- end page title --> 
+
+    
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <h4 class="header-title">Add &amp; Remove Rows</h4>
+                    <p class="sub-header">
+                        Add or remove rows from your FooTable.
+                    </p>
+
+                    <div class="mb-2">
+                        <div class="row">
+                            <div class="col-12 text-sm-center form-inline">
+                                <div class="form-group mr-2">
+                                    <button id="demo-btn-addrow" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i> Add New Row</button>
+                                </div>
+                                <div class="form-group">
+                                    <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table id="demo-foo-addrow" class="table table-centered table-striped table-bordered mb-0 toggle-circle" data-page-size="7">
+                        <thead>
+                        <tr>
+                            <th data-sort-ignore="true" class="min-width"></th>
+                            <th data-sort-initial="true" data-toggle="true">First Name</th>
+                            <th>Last Name</th>
+                            <th data-hide="phone">Job Title</th>
+                            <th data-hide="phone, tablet">DOB</th>
+                            <th data-hide="phone, tablet">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center"><button class="demo-delete-row btn btn-danger btn-xs btn-icon"><i class="fa fa-times"></i></button></td>
+                            <td>Isidra</td>
+                            <td>Boudreaux</td>
+                            <td>Traffic Court Referee</td>
+                            <td>22 Jun 1972</td>
+                            <td><span class="badge label-table badge-success">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><button class="demo-delete-row btn btn-danger btn-xs btn-icon"><i class="fa fa-times"></i></button></td>
+                            <td>Shona</td>
+                            <td>Woldt</td>
+                            <td>Airline Transport Pilot</td>
+                            <td>3 Oct 1981</td>
+                            <td><span class="badge label-table badge-secondary">Disabled</span></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr class="active">
+                            <td colspan="6">
+                                <div class="text-right">
+                                    <ul class="pagination pagination-split justify-content-end footable-pagination m-t-10"></ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div> <!-- end card-box -->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+
+    </div> <!-- container -->

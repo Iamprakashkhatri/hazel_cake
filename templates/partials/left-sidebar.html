@@ -1,0 +1,49 @@
+
+{% load static}
+<!-- ========== Left Sidebar Start ========== -->
+<div class="left-side-menu">
+
+  <div class="slimscroll-menu">
+
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+
+      <ul class="metismenu" id="side-menu">
+          <li class="menu-title">Navigation</li>
+
+          <li>
+              <a href="{% url 'customer_info:dashboard' %}">
+                  <i class="fe-airplay"></i>
+                  <span class="badge badge-success badge-pill float-right"></span>
+                  <span> DASHBOARD </span>
+              </a>
+          </li>
+          <li>
+              <a href="{% url 'customer_info:organization-list' %}">
+                  <i class="fa fa-product-hunt"></i>
+                  <span class="badge badge-success badge-pill float-right"></span>
+                  <span > ORGANIZATION </span>
+              </a>
+          </li>
+
+          <li>
+              <a href="#">
+                  <i class="fe-users"></i>
+                  <span class="badge badge-success badge-pill float-right"></span>
+                  <span> TEAM </span>
+              </a>
+          </li>
+
+
+      </ul>
+
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="clearfix"></div>
+
+  </div>
+  <!-- Sidebar -left -->
+
+</div>
+<!-- Left Sidebar End -->
