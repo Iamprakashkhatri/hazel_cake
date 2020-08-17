@@ -1,16 +1,24 @@
 from django.shortcuts import render,redirect,reverse
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormView
+
 from django.http import HttpResponseRedirect, JsonResponse
 from dateutil import parser
 
 from .models import Organization,Department,Package,Customer
-from .forms import OrganizationForm,OrganizationUpdateForm,DepartmentForm,DepartmentUpdateForm,EmployeeForm
+from django.contrib.auth.models import User
+from .forms import OrganizationForm, OrganizationUpdateForm, DepartmentForm, DepartmentUpdateForm, EmployeeForm, DateRangeForm, AnniversaryDateRangeForm
+from .forms import LoginForm
 
 import datetime
 from datetime import date, timedelta
+
+from django.shortcuts import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login, logout
 
 
 
@@ -19,6 +27,47 @@ class testing(TemplateView):
     def get (self,request):
         context = {}
         return render(request, 'testing.html',{})
+
+class LoginView(FormView):
+    template_name = "login/login.html"
+
+    def get(self, request, *args, **kwargs):
+        form = LoginForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, **kwargs):
+        form = LoginForm(request.POST, request.FILES or None)
+        if form.is_valid():
+            email=form.cleaned_data['email']
+            password=form.cleaned_data['password']
+            users = User.objects.filter(email=email)
+            if users:
+                user = authenticate(username=users.first().username, password=password)
+                print('user',user)
+                if user:
+                    login(request, user)
+                    return redirect('customer_info:dashboard')
+
+        content = {}
+        content['form'] = form
+        return render(request, 'login/login.html', content)
+
+    # def post(self, request):
+    #     form = LoginForm(request.POST, request.FILES or None)
+    #     if form.is_valid():
+    #         username = form.cleaned_data['username']
+    #         print('username',username)
+    #         password = form.cleaned_data['password']
+    #         user = authenticate(username=username, password=password)
+    #         print('user',user)
+    #         if user is not None:
+    #             if user.is_active:
+    #                 login(request, user)
+    #                 return HttpResponseRedirect(reverse('customer_info:dashboard'))
+    #         else:
+    #             return render(request, self.template_name, {
+    #                 'form': form, 'user': username, 'error': 'Incorrect username or password'})
+
 
 class DashboardView(TemplateView):
     def get(self,request):
@@ -42,6 +91,9 @@ class DashboardView(TemplateView):
         all_org_anniversary = Organization.objects.all().order_by('anniversary')
         print('all_org_anniversary',all_org_anniversary)
 
+        daterangeform = DateRangeForm()
+        anniversary_daterangeform = AnniversaryDateRangeForm()
+
         context= {
         'today_employees':today_employee,
         'tomorrow_employees':tomorrow_employee,
@@ -54,6 +106,8 @@ class DashboardView(TemplateView):
         'this_week_anniversary':this_week_anniversary,
         'this_month_anniversary':this_month_anniversary,
         'all_org_anniversary':all_org_anniversary,
+        'form':daterangeform,
+        'form1': anniversary_daterangeform,
         }
         return render(request,'login/dashboard.html',context)
 
@@ -568,6 +622,56 @@ class EmployeeDelete(DeleteView):
                     "No URL to redirect to.  Either provide a url or define"
                     " a get_absolute_url method on the Model.")
         return url
+
+class DateRange(FormView):
+    template_name = 'login/dashboard.html'
+
+    def get(self, request, *args, **kwargs):
+        daterangeform = DateRangeForm()
+        print('....',daterangeform)
+
+        return render(request, self.template_name, {'form': daterangeform})
+
+    def post(self, request, **kwargs):
+        date1 = request.POST['date_start']
+        date2 = request.POST['date_end']
+
+
+        # try:
+        parsed_date1 = parser.parse(date1)
+        parse_date1 = parsed_date1.strftime("%Y-%m-%d")
+        parsed_date2 = parser.parse(date2)
+        parse_date2 = parsed_date2.strftime("%Y-%m-%d")
+        range_user = Customer.objects.filter(birthdate__date__range=[parse_date1,
+                                                                            parse_date2])
+        print('range_user', range_user)
+        return render(request, 'reminded/range-view.html', {'range_user': range_user})
+        # except:
+        #     return redirect('customer_info:dashboard')
+
+
+class AnniversaryDateRange(FormView):
+    template_name = 'login/dashboard.html'
+
+    def get(self, request, *args, **kwargs):
+        anniv_daterangeform = AnniversaryDateRangeForm()
+
+        return render(request, self.template_name, {'form1': anniv_daterangeform})
+
+    def post(self, request, **kwargs):
+        date1 = request.POST['anniversary_date_start']
+        date2 = request.POST['anniversary_date_end']
+
+        parsed_date1 = parser.parse(date1)
+        parse_date1 = parsed_date1.strftime("%Y-%m-%d")
+        parsed_date2 = parser.parse(date2)
+        parse_date2 = parsed_date2.strftime("%Y-%m-%d")
+        print("this is range-------------------------", parse_date1, parse_date2)
+        range_organization = Organization.objects.filter(anniversary__date__range=[parse_date1, parse_date2])
+        print("this is range", range_organization)
+
+        return render(request, 'reminded/anniversary-range-view.html', {'range_organization': range_organization})
+
 
     
 

@@ -1,0 +1,146 @@
+{% extends "auth_base.html" %}
+{% load static  %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start Content-->
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customer Info</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customer</a></li>
+                        <li class="breadcrumb-item active">Organizations</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Organizations</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                <h4 class="header-title"></h4>
+                <p class="sub-header">
+
+                </p>
+
+                <div class="mb-2">
+                    <div class="row">
+                        <div class="col-12 text-sm-center form-inline">
+<!--                                                <div class="form-group mr-2">-->
+<!--                                                    <button id="demo-btn-addrow" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i> Add Project</button>-->
+<!--                                                </div>-->
+                    
+                            <div class="form-group">
+                                <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table id="demo-foo-addrow" class="table table-centered table-striped table-bordered mb-0 toggle-circle" data-page-size="7">
+                    <thead>
+                    <tr>
+                        <th>Name Of Organization</th>
+                        <th>Contact Person</th>
+                        <th>Location</th>
+                        <th>Contact Number</th>
+                        <th>Anniversary Date</th>
+                        <th>Package</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for org_anniversary in range_organization %}
+                        <tr>
+                            <td>{{ org_anniversary.name }}&nbsp;</td>
+                            <td>{{ org_anniversary.contact_person }}&nbsp;</td>
+                            <td>{{ org_anniversary.location }}&nbsp;</td>
+                            <td>{{ org_anniversary.contact_number }}&nbsp;</td>
+                            <td>{{ org_anniversary.anniversary.date}}&nbsp;</td>
+                            <td><a href="#custom-modal" class="btn btn-primary waves-effect waves-light mb-2" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#98a6ad">{{ org_anniversary.package }}</a></td>
+                            <td>{{ org_anniversary.email }}&nbsp;</td>
+
+                        <!-- Modal -->
+                        <div id="custom-modal" class="modal-demo">
+                            <button type="button" class="close" onclick="Custombox.modal.close();">
+                                <span>&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="custom-modal-title">{{ org_anniversary.package }}</h4>
+                            <div class="custom-modal-text text-left">
+                                <form>
+                                    <p><b>Name:</b> {{ org_anniversary.package }}</p>
+                                                    <p><b>Cake
+                                                        Flovour:</b> {{ org_anniversary.package.cake_flavour }}
+                                                    </p>
+                                                    <p>
+                                                        <b>Quantity:</b> {{ org_anniversary.package.quantity }}
+                                                    </p>
+                                                    <p><b>Complementary: </b>
+                                                        {% if org_anniversary.package.knife == True %}
+                                                            Knife ,
+                                                        {% endif %}
+                                                        <t></t>
+                                                        {% if org_anniversary.package.candle == True %}
+                                                            Candle ,
+                                                        {% endif %}
+                                                        {% if org_anniversary.package.tissue == True %}
+                                                            Tissue ,
+                                                        {% endif %}
+                                                        {% if org_anniversary.package.card == True %}
+                                                            Card ,
+                                                        {% endif %}
+                                                        {% if org_anniversary.package.flower == True %}
+                                                            Flower ,
+                                                        {% endif %}
+
+                                                        {% if org_anniversary.package.chocolates == True %}
+                                                            Chocolates ,
+                                                        {% endif %}
+
+                                                    </p>
+                                    <div class="text-right">
+                                        <button type="button" class="btn btn-primary waves-effect waves-light m-l-10" onclick="Custombox.modal.close();">Cancel</button>
+
+                                    </div>
+                                </form>
+                                
+                            </div>
+                        </div> 
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr class="active">
+                        <td colspan="8">
+                            <div class="text-right">
+                                <ul class="pagination pagination-split justify-content-end footable-pagination m-t-10"></ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tfoot>
+            </table>
+            </div> <!-- end card-box -->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+
+</div> <!-- container -->
+
+
+{% endblock %}
+
+{% block extra_javascript %}
+{% endblock %}

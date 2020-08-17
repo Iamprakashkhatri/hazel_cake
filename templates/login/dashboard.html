@@ -41,30 +41,34 @@
                                            
                                         </p>
 
-                                        <form class="form-inline">
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                <div class="form-group">
-                                                    <label for="date1">Start Date</label>
-                                                    {{ form.date_start }}
+                                        <form action="{% url 'customer_info:date-range' %} " method="post"
+                                              enctype="multipart/form-data" autocomplete="on">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <div class="form-group">
+                                                        <label for="date1">Start Date</label>
+                                                        {{ form.date_start }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group">
-                                                    <label for="date2">End Date </label>
-                                                    {{ form.date_end }}
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="date2">End Date </label>
+                                                        {{ form.date_end }}
 
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                    <div class="form-group">
+                                                        <button style="margin-top:25px;" type="submit"
+                                                                class="btn btn-primary waves-effect waves-light">
+                                                            Search
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group">
-                                                    <button style="margin-top:15px;" type="submit"
-                                                            class="btn btn-primary waves-effect waves-light">
-                                                        Search
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        
                                         </form>
 
                                     </div> <!-- end card-body -->
@@ -81,36 +85,67 @@
                                             
                                         </p>
 
-                                        <form class="form-inline">
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                <div class="form-group">
-                                                    <label for="date1">Start Date</label>
-                                                    {{ form.date_start }}
+                                        <form action="{% url 'customer_info:anniversary-date-range' %} " method="post"
+                                              enctype="multipart/form-data" autocomplete="on">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <div class="form-group">
+                                                        <label for="date3">Start date</label>
+                                                        {{ form1.anniversary_date_start }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="date4">End date </label>
+                                                        {{ form1.anniversary_date_end }}
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <div class="form-group">
+                                                        <button style="margin-top:25px;" type="submit"
+                                                                class="btn btn-primary waves-effect waves-light">
+                                                            Search
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group">
-                                                    <label for="date2">End Date </label>
-                                                    {{ form.date_end }}
-
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group">
-                                                    <button style="margin-top:15px;" type="submit"
-                                                            class="btn btn-primary waves-effect waves-light">
-                                                        Search
-                                                    </button>
-                                                </div>
-                                            </div>
-
                                         </form>
-
                                     </div> <!-- end card-body -->
                                 </div> <!-- end card -->
                             </div> <!-- end col -->
                         </div>
+
+
+    <script>
+        $('#date1').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: "yy-m-d"
+        });
+        $('#date2').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: "yy-m-d"
+        });
+        $('#date3').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: "yy-m-d"
+        });
+        $('#date4').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: "yy-m-d"
+        });
+
+    </script>
 
 
                         <div class="row">
@@ -149,7 +184,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane show active" id="home1">
-                                            <table id="basic-datatable" class="table dt-responsive nowrap">
+                                            <table id="basic-datatable" class="table">
                                                 <thead>
                                                 <tr>
                                                     <th>First Name</th>
@@ -226,8 +261,8 @@
                                                 
                                             </table>
                                         </div>
-                                        <div class="tab-pane show" id="profile1">
-                                            <table id="selection-datatable" class="table dt-responsive nowrap1">
+                                        <div class="tab-pane" id="profile1">
+                                            <table id="selection-datatable" class="table">
                                                 <thead>
                                                 <tr>
                                                     <th>First Name</th>
@@ -302,7 +337,7 @@
                                             </table>
                                         </div>
                                         <div class="tab-pane" id="messages1">
-                                            <table id="alternative-page-datatable" class="table dt-responsive nowrap">
+                                            <table id="state-saving-datatable" class="table">
                                                 <thead>
                                                 <tr>
                                                     <th>First Name</th>
@@ -385,7 +420,7 @@
                                             </table>
                                         </div>
                                         <div class="tab-pane" id="home2">
-                                            <table id="datatable-buttons" class="table table-striped dt-responsive nowrap">
+                                            <table id="key-datatable" class="table">
                                                 <thead>
                                                 <tr>
                                                     <th>First Name</th>
@@ -468,7 +503,7 @@
                                             </table>
                                         </div>
                                         <div class="tab-pane" id="profile2">
-                                            <table id="row-callback-datatable" class="table dt-responsive nowrap">
+                                            <table id="row-callback-datatable" class="table">
                                                 <thead>
                                                 <tr>
                                                     <th>First Name</th>
@@ -592,7 +627,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane show active" id="home3">
-                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                            <table id="datatable-buttons" class="table">
                                                     <thead>
                                                     <tr>
                                                         <th>Name Of Organization</th>
@@ -665,19 +700,11 @@
                                                         </tr>
                                                     {% endfor %}
                                                     </tbody>
-                                                    <tfoot>
-                                                    <tr class="active">
-                                                        <td colspan="7">
-                                                            <div class="text-right">
-                                                                <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tfoot>
+                                               
                                             </table>
                                         </div>
                                         <div class="tab-pane" id="profile3">
-                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                            <table id="alternative-page-datatable" class="table">
                                                     <thead>
                                                     <tr>
                                                         <th>Name Of Organization</th>
@@ -750,19 +777,10 @@
                                                         </tr>
                                                     {% endfor %}
                                                     </tbody>
-                                                    <tfoot>
-                                                    <tr class="active">
-                                                        <td colspan="7">
-                                                            <div class="text-right">
-                                                                <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tfoot>
                                             </table>
                                         </div>
                                         <div class="tab-pane" id="messages3">
-                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                            <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
                                                     <thead>
                                                     <tr>
                                                         <th>Name Of Organization</th>
@@ -847,7 +865,7 @@
                                             </table>
                                         </div>
                                         <div class="tab-pane" id="home4">
-                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                            <table id="complex-header-datatable" class="table dt-responsive nowrap">
                                                     <thead>
                                                     <tr>
                                                         <th>Name Of Organization</th>
@@ -920,19 +938,10 @@
                                                         </tr>
                                                     {% endfor %}
                                                     </tbody>
-                                                    <tfoot>
-                                                    <tr class="active">
-                                                        <td colspan="7">
-                                                            <div class="text-right">
-                                                                <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tfoot>
                                             </table>
                                         </div>
                                         <div class="tab-pane" id="profile4">
-                                            <table id="demo-foo-filtering" class="table table-bordered toggle-circle mb-0" data-page-size="7">
+                                            <table id="scroll-vertical-datatable" class="table dt-responsive nowrap">
                                                     <thead>
                                                     <tr>
                                                         <th>Name Of Organization</th>
@@ -1005,15 +1014,6 @@
                                                         </tr>
                                                     {% endfor %}
                                                     </tbody>
-                                                    <tfoot>
-                                                    <tr class="active">
-                                                        <td colspan="7">
-                                                            <div class="text-right">
-                                                                <ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    </tfoot>
                                             </table>
                                         </div>
                                     </div>

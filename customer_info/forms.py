@@ -2,6 +2,33 @@ from django import forms
 from .models import Department,Organization,Customer
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+
+
+class LoginForm(forms.ModelForm):
+    email = forms.CharField(widget=forms.EmailInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter email id'}
+    ), required=True, max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter password'}
+    ), required=True, max_length=50)
+
+    class Meta:
+        model = User
+        fields = ['email', 'password']
+
+    def clean_email(self):
+        email=self.cleaned_data['email']
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError(_('Email Doesnot Exist.'))
+        return email
+    # def clean_password_and_email(self):
+    #     password=self.cleaned_data['password']
+    #     email=self.cleaned_data['email']
+    #     users = User.objects.filter(email=email)
+    #     if not authenticate(username=users.first().username, password=password):
+    #         raise forms.ValidationError(_('Password Doesnot Exist.'))
+    #     return password,email
 
 
 class OrganizationForm(forms.ModelForm):
@@ -146,6 +173,29 @@ class EmployeeForm(forms.ModelForm):
     #     if Customer.objects.filter(last_name=last_name).exists():
     #         raise forms.ValidationError(_('User first name already exist.'))
     #     return last_name
+
+class DateRangeForm(forms.Form):
+    date_start = forms.DateField(widget=forms.DateInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter start date', 'id': 'date1', 'input_format': '%d-%m-%Y'}
+    ), required=True)
+    date_end = forms.DateField(widget=forms.DateInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter end date', 'id': 'date2'}
+    ), required=True)
+
+    # date = forms.DateTimeField(
+    #     input_formats=['%d/%m/%Y %H:%M'],
+    #     widget=BootstrapDateTimePickerInput()
+    # )
+
+
+class AnniversaryDateRangeForm(forms.Form):
+    anniversary_date_start = forms.DateField(widget=forms.DateInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter start date', 'id': 'date3'}
+    ), required=True)
+    anniversary_date_end = forms.DateField(widget=forms.DateInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter end date', 'id': 'date4'}
+    ), required=True)
+
     
 
 
